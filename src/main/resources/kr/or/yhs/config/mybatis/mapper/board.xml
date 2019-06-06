@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 게시글 전체 조회 -->
+	<select id="postList" resultType="postVo">
+		select * from post
+	</select>
+
+	<!-- 게시글 조회 -->
+	<select id="postInfo" parameterType="int" resultType="postVo">
+		select * from post where postnum = #{postnum}
+	</select>
+
+	<!-- 게시글 전체 갯수 조회 -->
+	<select id="postCnt" resultType="int">
+		select count(*) from post
+	</select>
+	
+	<!-- 게시글 페이징 -->
+	<select id="postPagingList" parameterType="pageVo" resultType="postVo">
+	  <![CDATA[
+		select *
+		from
+		(select a.*, rownum rn
+		from
+		(select a.*
+		from post a) a)
+		where rn >=(#{page}-1)*#{pageSize} + 1 and rn <=#{page}*#{pageSize}
+		]]>
+	</select>
+
+
+
+
+	<!-- 게시글 등록 -->
+	<insert id="insertPost" parameterType="postVo">
+		insert into post values
+		(POST_SEQ.NEXTVAL,sysdate,#{post_title},#{content},#{id},#{userid},#{postid2,
+		jdbcType=VARCHAR})
+	</insert>
+
+	<!-- ####################################게시판############################################# -->
+
+	<!-- 게시판 전체 조회 -->
+	<select id="boardList" resultType="boardVo">
+		select * from board
+	</select>
+
+	<insert id="inserBoard" parameterType="boardVo">
+		insert into board values
+		(board_seq.nextval,#{boardname},#{use_yn},sysdate,#{userid})
+	</insert>
+
+</mapper>
