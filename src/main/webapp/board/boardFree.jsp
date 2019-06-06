@@ -66,7 +66,8 @@ $(document).ready(function(){
 									<td>제목</td>
 									<td>작성자 아이디</td>
 									<td>작성일시</td>
-								</tr>								
+								</tr>	
+															
 								<c:forEach items="${boardFreeList}" var="post">
 								<tr class="postTr">
 									<td class="postnum">${post.postnum}</td>
@@ -81,7 +82,7 @@ $(document).ready(function(){
 							</table>
 						</div>
 
-						<a class="btn btn-default pull-right">게시글 등록</a>
+						<a href="${pageContext.request.contextPath }/postForm" class="btn btn-default pull-right">게시글 등록</a>
 
 						<div class="text-center">
 							<ul class="pagination">

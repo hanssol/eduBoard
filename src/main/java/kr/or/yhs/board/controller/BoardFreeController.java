@@ -38,17 +38,15 @@ public class BoardFreeController extends HttpServlet {
 		int pageSize =  pageSizeString == null ? 5 : Integer.parseInt(pageSizeString);
 		
 		PageVo pageVo = new PageVo(page,pageSize);
-		// 사용자 페이징 리스트 조회
-		Map<String, Object> resultMap = boardService.userPagingList(pageVo);
+		
+		Map<String, Object> resultMap = boardService.postPagingList(pageVo);
 		List<PostVo> userList = (List<PostVo>) resultMap.get("postList");
 		int paginationSize = (Integer) resultMap.get("paginationSize");
 		
-		// userList객체를 userList.jsp에서 참고할 수 있도록 request객체에 속성을 넣어준다
 		request.setAttribute("boardFreeList", boardService.postList());
 		request.setAttribute("paginationSize", paginationSize);
 		request.setAttribute("pageVo", pageVo);
 		
-		// userList객체를 이용하여 사용자 화면을 생성하는 jsp
 		request.getRequestDispatcher("/board/boardFree.jsp").forward(request, response);
 	}
 

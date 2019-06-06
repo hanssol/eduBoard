@@ -69,5 +69,13 @@ public class BoardDao implements IBoardDao{
 		sqlSession.close();
 		return postCnt;
 	}
+
+	@Override
+	public BoardVo boardInfo(int boardnum) {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		BoardVo boardInfo = sqlSession.selectOne("board.boardInfo",boardnum);
+		sqlSession.close();
+		return boardInfo;
+	}
 	
 }

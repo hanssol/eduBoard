@@ -46,7 +46,7 @@ public class BoardService implements IBoardService{
 		return dao.postInfo(postnum);
 	}
 	@Override
-	public Map<String, Object> userPagingList(PageVo pageVo) {
+	public Map<String, Object> postPagingList(PageVo pageVo) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("postList", dao.postPagingList(pageVo));
 		
@@ -60,6 +60,10 @@ public class BoardService implements IBoardService{
 	@Override
 	public List<BoardVo> boardList() {
 		return dao.boardList();
+	}
+	@Override
+	public BoardVo boardInfo(int boardInfo) {
+		return dao.boardInfo(boardInfo);
 	}
 	
 }

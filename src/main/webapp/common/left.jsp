@@ -17,7 +17,7 @@
 		
 		<c:forEach items="${boardList }" var="board" >
 			<li class="active">
-				<a href="${pageContext.request.contextPath}/boardFree">${board.boardname }</a>
+				<a href="${pageContext.request.contextPath}/board?boardnum">${board.boardname }</a>
 			</li>
 		</c:forEach>
 		

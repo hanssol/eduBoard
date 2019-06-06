@@ -89,5 +89,6 @@ public interface IBoardDao {
 	 */
 	List<BoardVo> boardList();
 	
+	BoardVo boardInfo(int boardnum);
 	
 }

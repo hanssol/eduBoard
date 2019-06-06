@@ -16,7 +16,9 @@ public interface IBoardService {
 	
 	PostVo postInfo(int postnum);
 	
-	Map<String, Object> userPagingList(PageVo pageVo);
+	Map<String, Object> postPagingList(PageVo pageVo);
 	
 	List<BoardVo> boardList();
+	
+	BoardVo boardInfo(int boardInfo);
 }
