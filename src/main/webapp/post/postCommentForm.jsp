@@ -32,19 +32,25 @@
 
 <script>
 	src="${pageContext.request.contextPath }/SE2/js/HuskyEZCreator.js">
-	$(document).ready(function() {
-
+	
+	$(document).ready(function(){
+		
 		// 사용자 등록 버튼 클릭 이벤트 핸들러
-		$("#postRegBtn").on("click", function() {
+		$("#postRegBtn").on("click",function(){
 			// 유효성체크
-
+			
 			// 여기까지 도달하면 유효성 검사 완료(submit)
 			$("#frm").submit();
 		});
-
+		
+		
 		//개발용 데이타 초기화 함수 ****** 추후 지울것
 		//dataInit();
 	});
+
+
+
+
 
 	var oEditors = []; // 개발되어 있는 소스에 맞추느라, 전역변수로 사용하였지만, 지역변수로 사용해도 전혀 무관 함.
 
@@ -78,7 +84,7 @@
 
 										// 이부분에 에디터 validation 검증
 										if (validation()) {
-											// 											$("#frm").submit();
+// 											$("#frm").submit();
 										}
 									}
 								})
@@ -97,9 +103,10 @@
 	}
 </script>
 <style>
-#smarteditor {
-	margin: auto;
-}
+	#smarteditor{
+		margin : auto;
+	}
+
 </style>
 </head>
 <body>
@@ -118,54 +125,51 @@
 
 
 						<div class="table-responsive">
-							<form action="${pageContext.request.contextPath }/postForm"
-								method="post" id="frm" class="form-horizontal" role="form"
-								enctype="multipart/form-data">
-
-
-								<input type="hidden" name="boardnum" value="${boardnum }">
-
-
-								<div class="form-group">
-									<label for="post_title" class="col-sm-2 control-label">제목</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="post_title"
-											name="post_title" placeholder="제목"
-											value="${param.post_title }">
-									</div>
+							<form action="${pageContext.request.contextPath }/postCommentForm"
+								method="post" id="frm" class="form-horizontal" role="form" enctype="multipart/form-data">
+							
+							<input type="hidden" name="boardnum" id="boardnum" value="${boardnum}"/>
+							<input type="hidden" name="postnum2" id="postnum2" value="${postnum2}"/>
+							<input type="hidden" name="groupnum" id="groupnum" value="${postInfo.group_num}"/>
+							
+							<div class="form-group">
+								<label for="post_title" class="col-sm-2 control-label">제목</label>
+								<div class="col-sm-10">
+										<input type="text" class="form-control" id="post_title" name="post_title"
+											placeholder="제목" value="${param.post_title }">
 								</div>
-
-								<div class="form-group">
-									<label for="userid" class="col-sm-2 control-label">작성자</label>
-									<div class="col-sm-10">
-										<input type="hidden" class="form-control" id="userid"
-											name="userid" placeholder="작성자" value=${USER_INFO.userId }>
-										<textarea name="smarteditor" id="smarteditor" rows="10"
-											cols="100" style="width: 766px; height: 412px;"></textarea>
-									</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="userid" class="col-sm-2 control-label">작성자</label>
+								<div class="col-sm-10">
+										<input type="hidden" class="form-control" id="userid" name="userid"
+											placeholder="작성자" value=${USER_INFO.userId }>
+										<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px;"></textarea>
 								</div>
-
-								<div class="form-group">
-									<label for="userid" class="col-sm-2 control-label">첨부파일</label>
-									<div class="col-sm-10">
-										<input type="file" class="form-control" id="attachment"
-											name="attachment" placeholder="첨부파일" value=${USER_INFO.userId }>
-									</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="userid" class="col-sm-2 control-label">첨부파일</label>
+								<div class="col-sm-10">
+										<input type="file" class="form-control" id="attachment" name="attachment"
+											placeholder="첨부파일" value=${USER_INFO.name }>
 								</div>
-
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
-										<button id="postRegBtn" type="button" class="btn btn-default">게시글등록</button>
-									</div>
+							</div>
+								
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button id="postRegBtn" type="button" class="btn btn-default">게시글등록</button>
 								</div>
-
-
-
+							</div>
+							
+					
+							
 							</form>
-
-
-
-
+							
+							
+							
+							
 						</div>
 
 					</div>

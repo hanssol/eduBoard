@@ -2,8 +2,8 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-   <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +19,43 @@
 
 <!-- css,js -->
 <%@include file="/common/basicLib.jsp" %>
+<script>
+$(document).ready(function(){
+	// 수정하기 버튼
+	$("#editBtn").on("click",function(){
+		$("#frm").attr("action","${pageContext.request.contextPath }/postEdit");
+		$("#frm").attr("method","post");
+		$("#frm").submit();
+	})
+	
+	// 댓글버튼
+	$("#replyBtn").on("click",function(){
+		$("#frm").submit();
+	})
+	
+	// 답글버튼
+	$("#commentBtn").on("click",function(){
+		$("#frm").attr("action","${pageContext.request.contextPath }/postCommentForm");
+		$("#frm").attr("method","get");
+		$("#frm").submit();
+	})
+	
+	// 삭제버튼
+	$("#deleteBtn").on("click",function(){
+		if(confirm("정말 삭제할거에요?")== true){
+			
+			$("#frm").attr("action","${pageContext.request.contextPath }/postDelete");
+			$("#frm").attr("method","post");
+			$("#frm").submit();
+		}else{
+			return false;
+		}
+	})
+	
+	
+})
 
+</script>
 </head>
 <body>
 	<!-- header -->
@@ -35,9 +71,14 @@
 					<div class="col-sm-8 blog-main">
 						<h2 class="sub-header">게시글 상세조회</h2>
 						
-						<form class="form-horizontal" role="form" action="${pageContext.request.contextPath }/postModify"
-							  method="get">
+						<form class="form-horizontal" role="form" id="frm" action="${pageContext.request.contextPath }/post"
+							  method="post">
 								<input type="hidden" id="userId" name="userId" value="${postInfo.postnum}"/>
+								<input type="hidden" id="postnum2" name="postnum2" value="${postInfo.postnum }"/>
+								<input type="hidden" id="boardnum" name="boardnum" value="${postInfo.boardnum }"/>
+								<input type="hidden" id="userid2" name="userid2" value="${postInfo.userid }"/>
+								
+								
 						
 		
 							<div class="form-group">
@@ -61,11 +102,36 @@
 								</div>
 							</div>
 							
+							<div class="form-group">
+								<label for="userNm" class="col-sm-2 control-label">댓글</label>
+								<div class="col-sm-10">
+									<table class="table table-striped">
+										<tr>
+											<td>작성자 아이디</td>
+											<td>내용</td>
+											<td>작성일시</td>
+										</tr>
+										<c:forEach items="${replyList }" var="reply">
+											<tr>
+												<td>${reply.userid }</td>
+												<td>${reply.r_content }</td>
+												<td>${reply.replydt }</td>
+											</tr>
+										</c:forEach>	
+										
+									</table>
+									<textarea rows="1" cols="60" name="r_content"></textarea>
+									<button type="button" name="replyBtn" id="replyBtn"> 댓글등록 </button>
+									<button type="button" name="commentBtn" id="commentBtn"> 답글등록 </button>
+									<button type="button" name="deleteBtn" id="deleteBtn"> 게시글삭제 </button>
+								</div>
+							</div>
 		
+							
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									
-									<button type="submit" class="btn btn-default">사용자 수정</button>
+									<button type="button" name="editBtn" id="editBtn" class="btn btn-default">게시글 수정</button>
 								</div>
 							</div>
 							

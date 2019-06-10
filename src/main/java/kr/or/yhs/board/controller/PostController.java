@@ -1,6 +1,7 @@
 package kr.or.yhs.board.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.yhs.board.model.PostVo;
+import kr.or.yhs.board.model.ReplyVo;
 import kr.or.yhs.board.service.BoardService;
 import kr.or.yhs.board.service.IBoardService;
 import kr.or.yhs.user.service.UserService;
@@ -32,8 +34,10 @@ public class PostController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String postnum = request.getParameter("postnum");
 		PostVo postInfo = boardService.postInfo(Integer.parseInt(postnum));
+		List<ReplyVo> replyList = boardService.replyList(Integer.parseInt(postnum));
 		
 		request.setAttribute("postInfo", postInfo);
+		request.setAttribute("replyList", replyList);
 		
 		request.getRequestDispatcher("/post/post.jsp").forward(request, response);
 	}
@@ -42,7 +46,24 @@ public class PostController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+		
+		String r_content = request.getParameter("r_content");
+		String userid = request.getParameter("userid2");
+		String postNM = request.getParameter("postnum2");
+		int postnum = Integer.parseInt(postNM);
+		String boardNM = request.getParameter("boardnum");
+		int boardnum = Integer.parseInt(boardNM);
+		
+		ReplyVo replyVo = null;
+		replyVo = new ReplyVo(r_content, userid, postnum);
+		
+		int replyCnt = boardService.insertReply(replyVo);
+		
+		if(replyCnt == 1){
+			response.sendRedirect(request.getContextPath()+"/post?postnum="+postnum+"&boardnum=1"+boardnum);
+		}
+		
 	}
 
 }

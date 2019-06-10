@@ -79,4 +79,34 @@
     <servlet-name>LogoutController</servlet-name>
     <url-pattern>/LogoutController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardAddController</display-name>
+    <servlet-name>BoardAddController</servlet-name>
+    <servlet-class>kr.or.yhs.board.controller.BoardAddController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardAddController</servlet-name>
+    <url-pattern>/BoardAddController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommentPostController</display-name>
+    <servlet-name>CommentPostController</servlet-name>
+    <servlet-class>kr.or.yhs.board.controller.CommentPostController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommentPostController</servlet-name>
+    <url-pattern>/CommentPostController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AttachmentController</display-name>
+    <servlet-name>AttachmentController</servlet-name>
+    <servlet-class>kr.or.yhs.board.controller.AttachmentController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AttachmentController</servlet-name>
+    <url-pattern>/AttachmentController</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -19,7 +19,31 @@
 
 <!-- css,js -->
 <%@include file="/common/basicLib.jsp" %>
+<script >
 
+$(document).ready(function(){
+	$(".boardAddTr").find("button").on("click",function(){
+		
+		$("#frmAdd").submit();
+	})
+
+	$(".boardTr").find("button").on("click",function(){
+		var a = $(this).closest(".boardTr").find(".boardNM").children("#boardnum").val();
+		$("#boardnum1").val(a);
+		var b = $(this).closest(".boardTr").find(".use_yn").children("#yn").val();
+		$("#use_yn1").val(b);
+		var c = $(this).closest(".boardTr").find(".boardNM").children("#boardname").val();
+		$("#boardname1").val(c);
+		
+		
+		$("#frm").submit();
+	})
+	
+	//생성 버튼 눌렀을때에는 기존  controller  타게 하세요
+	// 수정 버튼 눌렀을 때  새로운 경로를 타게 해야함  action 의 경로를 변경해야함  attr 이벤트 써서
+	
+})
+</script>
 </head>
 
 <body>
@@ -34,34 +58,83 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="row">
 					<div class="col-sm-8 blog-main">
+					
 						<h2 class="sub-header">게시판 생성</h2>
+						<form id="frmAdd" class="form-horizontal" role="form"
+								action="${pageContext.request.contextPath }/boardAdd"
+								method="post">
+						<input type="hidden" name="userId" id="userId" value="${USER_INFO.userId }"/> 
 						<div class="table-responsive">
 							<table class="table table-striped">
-								<ul>
-									<li>
-										<input type="text" name="board" value="자유게시판"/>
-										<select name="yn">
-											<option value="사용" selected="selected">사용</option>
-											<option value="미사용">미사용</option>
+								<tr class="boardAddTr">
+									<td> 게시판 이름 </td>
+									<td id="boardAddTd"> <input type="text" name="boardAddname" id="boardAddname"/> </td>
+									<td id="boardYNTd">
+										<select name="yn" id="yn">
+											<option value="yes" selected="selected">사용</option>
+											<option value="no" name="use_yn" id="use_yn">미사용</option>
 										</select>
-									</li>
+									</td>
+									<td>
+										 <button type="button" id="boardAdd" name="boardAdd" class="btn btn-default pull-right"> 생성 </button>
+									</td>
 									
-								</ul>
-<%-- 								<% 
-// 									List<UserVo> userList = (List<UserVo>)request.getAttribute("userList");
-							%> --%>
-								<!-- userList의 데이터를 한건 조회해서
-									 pageContext.setAttribute("user",vo); -->
-								<c:forEach items="${userList}" var="user">
-								<tr>
-									<td>${user.userId}</td>
-									<td>${user.name}</td>
-									<td>${user.alias}</td>
-									<td></td>
-								
 								</tr>
-									
+						
+							</table>
+						</div>
+						
+						</form>
+						
+						
+						<h2 class="sub-header">게시판 수정</h2>
+						
+						<form id="frm" class="form-horizontal" role="form"
+								action="${pageContext.request.contextPath }/boardManagement"
+								method="post">
+						<input type="hidden" name="boardnum1" id="boardnum1"/> 
+						<input type="hidden" name="use_yn1" id="use_yn1"/> 
+						<input type="hidden" name="boardname1" id="boardname1" /> 
+						
+						
+						
+								
+						<div class="table-responsive">
+							<table class="table table-striped">
+							
+								<c:forEach items="${boardList }" var="board">
+									<tr class="boardTr">
+												<td> 게시판 이름 </td>
+												<td class="boardNM"> 
+													<input type="text" name="boardname" id="boardname" value="${board.boardname }"/> 
+												
+													<input type="hidden" name="boardnum" id="boardnum" value="${board.boardnum }"/> 
+												</td>
+										<c:choose>
+											<c:when test="${board.use_yn == 'yes' }">
+												<td class="use_yn">
+													 <select name="yn" id="yn">
+														<option value="yes" selected="selected">사용</option>
+														<option value="no" name="use_yn" id="use_yn">미사용</option>
+													</select>
+												<td>
+											</c:when>
+											
+											<c:otherwise>
+												<td class="use_yn">
+													<select name="yn" id="yn">
+														<option value="yes" name="use_yn" id="use_yn" >사용</option>
+														<option value="no" selected="selected">미사용</option>
+													</select>
+												<td>
+											</c:otherwise>
+										</c:choose>
+											<td>
+												 <button type="button" id="useChange" name="useChange" class="btn btn-default pull-right"> 수정 </button>
+											</td>
+									</tr>
 								</c:forEach>
+								
 <%-- 								<% 
 // 										for(int i=0;i<userList.size();i++){
 // 										out.write("<tr>");
@@ -76,8 +149,8 @@
 								
 							</table>
 						</div>
-
-						<a class="btn btn-default pull-right">게시판 등록</a>
+						
+					</form>
 
 					</div>
 				</div>

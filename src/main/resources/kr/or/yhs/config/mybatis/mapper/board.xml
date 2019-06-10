@@ -32,15 +32,63 @@
 		where rn >=(#{page}-1)*#{pageSize} + 1 and rn <=#{page}*#{pageSize}
 		]]>
 	</select>
+	
+	<!-- 게시판별 게시글 페이징 -->
+	<select id="boardPostPagingList" parameterType="pageVo" resultType="postVo">
+	  <![CDATA[
+	select b.*
+from
+(SELECT A.*, ROWNUM RN FROM
+		    (SELECT p.*, LPAD(' ', (LEVEL-1)*4) || p.POST_TITLE, LEVEL LV
+		        FROM post p WHERE BOARDNUM = ${boardnum} AND USE_YN = 'yes'
+		        START WITH POSTNUM2
+		        IS NULL CONNECT BY PRIOR POSTNUM = POSTNUM2
+		        ORDER SIBLINGS BY GROUP_NUM DESC, POSTNUM
+		    ) A) B
+	where rn >=(#{page}-1)*#{pageSize} + 1 and rn <=#{page}*#{pageSize}
+		]]>
+		
+	</select>
+	
+	
 	<!-- 게시글 등록 -->
 	<insert id="insertPost" parameterType="postVo">
 		insert into post values
-		(POST_SEQ.NEXTVAL,sysdate,#{post_title},#{p_content},#{boardnum},#{userid},#{postnum2,
-		jdbcType=VARCHAR})
+		(POST_SEQ.NEXTVAL,sysdate,#{post_title},#{p_content},#{boardnum},#{userid},
+		<choose>
+			<when test="postnum2 != 0">
+				#{postnum2},
+			</when>
+			<otherwise>
+				NULL,
+			</otherwise>
+		</choose>
+		'yes',
+		<choose>
+			<when test="postnum2 != 0">
+				#{group_num}
+			</when>
+			<otherwise>
+				POST_SEQ.NEXTVAL
+			</otherwise>
+		</choose>
+)
 	</insert>
 	
+	<!-- 게시글 수정 -->
+	<update id="updatePost" parameterType="postVo">
+		update post set post_title=${post_title},p_content=${p_content} where postnum=#{postnum}
+	</update>
 	
+	<!-- 게시글 댓글 등록-->
+	<insert id="insertReply" parameterType="replyVo">
+		insert into reply values(reply_seq.nextval,#{r_content},sysdate,#{userid},#{postnum})
+	</insert>
 	
+	<!-- 게시글 댓글 조회 -->
+	<select id="replyList" parameterType="int" resultType="replyVo">
+		select * from reply where postnum = #{postnum}
+	</select>
 	
 
 	<!-- ####################################게시판############################################# -->
@@ -48,6 +96,10 @@
 	<!-- 게시판 전체 조회 -->
 	<select id="boardList" resultType="boardVo">
 		select * from board
+	</select>
+	
+	<select id="boardListYes" parameterType="String" resultType="boardVo">
+		select * from board where use_yn= #{use_yn}
 	</select>
 
 	<!-- 게시판 등록 -->
@@ -73,6 +125,10 @@
 			where rn >=(#{page}-1)*#{pageSize} + 1 and rn <=#{page}*#{pageSize}
 			]]>
 	</select>
+	<!-- 게시판 수정 -->
 	
+	<update id="updateBoard" parameterType="boardVo">
+		update board set use_yn = #{use_yn}, boardname = #{boardname} where boardnum = #{boardnum}
+	</update>
 
 </mapper>

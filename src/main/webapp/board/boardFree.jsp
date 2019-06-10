@@ -28,6 +28,13 @@
 </style>
 <script>
 $(document).ready(function(){
+	$("#postRegBtn").on("click",function(){
+		$("#frm").attr("action","${pageContext.request.contextPath }/postForm");
+		$("#frm").attr("method","get");
+		$("#frm").submit();
+	})
+	
+	
 	$(".postTr").on("click",function(){
 		console.log("postTr click");
 		var postnum = $(this).find(".postnum").text();
@@ -57,6 +64,7 @@ $(document).ready(function(){
 						
 						<form id="frm" action="${pageContext.request.contextPath }/post" method="get"> 
 							<input type="hidden" id="postnum" name="postnum"/>
+							<input type="hidden" id="boardnum" name="boardnum" value="${pageVo.boardnum }"/>
 						</form>
 						
 						<div class="table-responsive">
@@ -68,10 +76,10 @@ $(document).ready(function(){
 									<td>작성일시</td>
 								</tr>	
 															
-								<c:forEach items="${boardFreeList}" var="post">
+								<c:forEach items="${postList}" var="post">
 								<tr class="postTr">
 									<td class="postnum">${post.postnum}</td>
-									<td>${post.post_title}</td>
+									<td style="padding-left:${post.lv}9px">${post.post_title}</td>
 									<td>${post.userid}</td>
 									<td><fmt:formatDate value="${post.postdt}" pattern="yyyy-MM-dd" /></td>
 								
@@ -82,7 +90,8 @@ $(document).ready(function(){
 							</table>
 						</div>
 
-						<a href="${pageContext.request.contextPath }/postForm" class="btn btn-default pull-right">게시글 등록</a>
+<%-- 						<a href="${pageContext.request.contextPath }/postForm" class="btn btn-default pull-right">게시글 등록</a> --%>
+						<button id="postRegBtn" type="button" class="btn btn-default pull-right">게시글등록</button>
 
 						<div class="text-center">
 							<ul class="pagination">
@@ -99,7 +108,7 @@ $(document).ready(function(){
 								</c:when>
 								<c:otherwise>
 									<li>
-										<a href="${pageContext.request.contextPath}/postPagingList?page=${pageVo.page - 1}&pageSize=${pageVo.pageSize}">«</a>
+										<a href="${pageContext.request.contextPath}/board?boardnum=${pageVo.boardnum }&page=${pageVo.page - 1}&pageSize=${pageVo.pageSize}">«</a>
 									</li>
 								</c:otherwise>
 							</c:choose>
@@ -110,7 +119,7 @@ $(document).ready(function(){
 											<li class="active"><span>${i}</span></li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="${pageContext.request.contextPath}/postPagingList?page=${i}&pageSize=${pageVo.pageSize}">${i}</a></li>
+											<li><a href="${pageContext.request.contextPath}/board?boardnum=${pageVo.boardnum }&page=${i}&pageSize=${pageVo.pageSize}">${i}</a></li>
 										</c:otherwise>
 									</c:choose>
 
@@ -122,7 +131,7 @@ $(document).ready(function(){
 									</c:when>
 									<c:otherwise>
 										<li>
-											<a href="${pageContext.request.contextPath}/postrPagingList?page=${pageVo.page + 1}&pageSize=${pageVo.pageSize}">»</a>
+											<a href="${pageContext.request.contextPath}/board?boardnum=${pageVo.boardnum }&page=${pageVo.page + 1}&pageSize=${pageVo.pageSize}">»</a>
 										</li>
 									
 									</c:otherwise>

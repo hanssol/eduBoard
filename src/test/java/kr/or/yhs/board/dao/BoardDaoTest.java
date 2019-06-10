@@ -1,8 +1,12 @@
 package kr.or.yhs.board.dao;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import kr.or.yhs.board.model.BoardVo;
 import kr.or.yhs.board.model.PostVo;
+import kr.or.yhs.board.model.ReplyVo;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -37,7 +41,7 @@ public class BoardDaoTest {
 		dao = new BoardDao();
 		BoardVo boardVo = null;
 		
-		boardVo = new BoardVo("사진게시판", "yes", "brown");
+		//boardVo = new BoardVo("사진게시판", "yes", "brown");
 		/***When***/
 		int insertCnt = dao.insertBoard(boardVo);
 		
@@ -59,5 +63,60 @@ public class BoardDaoTest {
 		logger.debug("postVo : {}", postVo);
 
 	}
+	
+	@Test
+	public void boardListYesTest(){
+		/***Given***/
+		dao = new BoardDao();
+		String yes ="yes";
 
+		/***When***/
+		List<BoardVo> boardVo = dao.boardListYes("yes");
+		/***Then***/
+		logger.debug("boarListVo : {}",boardVo);
+
+	}
+	
+	@Test
+	public void updateBoardTest(){
+		/***Given***/
+		BoardVo boardVo = null;
+		
+		dao = new BoardDao();
+		boardVo = new BoardVo(1,"자유게시판" ,"no");
+		
+		logger.debug("boardCnt : {}",boardVo);
+
+		/***When***/
+		int boardCnt = dao.updateBoard(boardVo);
+		/***Then***/
+		assertEquals(1, boardCnt);
+	}
+	
+	@Test
+	public void replyListTest(){
+		/***Given***/
+		dao = new BoardDao();
+		
+		int postnum = 4;
+
+		/***When***/
+		List<ReplyVo> replyList = dao.replyList(postnum);
+		/***Then***/
+		logger.debug("replyList : {}", replyList);
+	}
+	
+	@Test
+	public void insertReplyTest(){
+		/***Given***/
+		dao = new BoardDao();
+		ReplyVo replyVo = new ReplyVo("날아오르라", "cony", 26);
+
+		/***When***/
+		int replyCnt = dao.insertReply(replyVo);
+		/***Then***/
+		logger.debug("replyCnt : {}", replyCnt);
+
+	}
+	
 }

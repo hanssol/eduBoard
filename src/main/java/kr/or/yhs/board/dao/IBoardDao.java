@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.yhs.board.model.BoardVo;
 import kr.or.yhs.board.model.PostVo;
+import kr.or.yhs.board.model.ReplyVo;
 import kr.or.yhs.paging.model.PageVo;
 
 public interface IBoardDao {
@@ -51,6 +52,8 @@ public interface IBoardDao {
 	 */
 	List<PostVo> postPagingList(PageVo pageVo);
 	
+	List<PostVo> boardPostPagingList(PageVo pageVo);
+	
 	/**
 	 * 
 	 * Method : postCnt
@@ -61,6 +64,11 @@ public interface IBoardDao {
 	 */
 	int postCnt();
 	
+	int updatePost(PostVo postVo);
+	
+	int insertReply(ReplyVo replyVo);
+	
+	List<ReplyVo> replyList(int postnum);
 	
 	
 	
@@ -89,6 +97,12 @@ public interface IBoardDao {
 	 */
 	List<BoardVo> boardList();
 	
+	List<BoardVo> boardListYes(String use_yn);
+	
 	BoardVo boardInfo(int boardnum);
+	
+	int updateBoard(BoardVo boardVo);
+	
+	
 	
 }

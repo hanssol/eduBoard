@@ -9,9 +9,45 @@ public class PostVo {
 	private String p_content;	//	내용
 	private int boardnum;		//	게시판번호
 	private String userid;		//	작성자
-	private String postnum2;	//	부모게시글
+	private int postnum2;	//	부모게시글
+	private String use_yn;		//  게시글 사용여부
+	private int group_num;   //  그룹번호
+	private int lv;
+	
+	public int getLv() {
+		return lv;
+	}
+
+	public void setLv(int lv) {
+		this.lv = lv;
+	}
+
+	public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+	private int rn;
 	
 	
+	public String getUse_yn() {
+		return use_yn;
+	}
+
+	public void setUse_yn(String use_yn) {
+		this.use_yn = use_yn;
+	}
+
+	public int getGroup_num() {
+		return group_num;
+	}
+
+	public void setGroup_num(int group_num) {
+		this.group_num = group_num;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postnum=" + postnum + ", postdt=" + postdt
@@ -24,10 +60,10 @@ public class PostVo {
 		
 	}
 	
-	public PostVo(int postnum, String post_title, String p_content,
+	public PostVo(int boardnum, String post_title, String p_content,
 			String userid) {
 		super();
-		this.postnum = postnum;
+		this.boardnum = boardnum;
 		this.post_title = post_title;
 		this.p_content = p_content;
 		this.userid = userid;
@@ -71,10 +107,10 @@ public class PostVo {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public String getPostnum2() {
+	public int getPostnum2() {
 		return postnum2;
 	}
-	public void setPostnum2(String postnum2) {
+	public void setPostnum2(int postnum2) {
 		this.postnum2 = postnum2;
 	}
 	

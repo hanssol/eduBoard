@@ -93,9 +93,14 @@ public class LoginController extends HttpServlet {
 			HttpSession session =request.getSession();
 			session.setAttribute("USER_INFO", uservo);
 			
-			List<BoardVo> boardList = boardService.boardList();
+			String use_yn = "yes";
+			List<BoardVo> boardListY = boardService.boardListYes(use_yn);
 			ServletContext sc = request.getServletContext();
-			sc.setAttribute("boardList", boardList);
+			sc.setAttribute("boardListY", boardListY);
+			
+			
+			
+			
 			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/board/main.jsp");

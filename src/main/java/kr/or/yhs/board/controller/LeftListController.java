@@ -17,7 +17,7 @@ import kr.or.yhs.board.service.IBoardService;
 /**
  * Servlet implementation class LeftListController
  */
-@WebServlet("/board")
+@WebServlet("/board1")
 public class LeftListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

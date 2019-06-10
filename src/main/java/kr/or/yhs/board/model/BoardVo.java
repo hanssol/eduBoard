@@ -22,6 +22,8 @@ public class BoardVo {
 		
 	}
 	
+	
+
 	public BoardVo(String boardname, String use_yn, String userid) {
 		super();
 		this.boardname = boardname;
@@ -29,7 +31,12 @@ public class BoardVo {
 		this.userid = userid;
 	}
 
-
+	public BoardVo(int boardnum, String boardname, String use_yn) {
+		super();
+		this.boardnum = boardnum;
+		this.boardname = boardname;
+		this.use_yn = use_yn;
+	}
 
 	public int getBoardnum() {
 		return boardnum;
