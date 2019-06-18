@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import kr.or.yhs.board.model.AttachmentVo;
 import kr.or.yhs.board.model.BoardVo;
 import kr.or.yhs.board.model.PostVo;
 import kr.or.yhs.board.model.ReplyVo;
@@ -116,6 +117,31 @@ public class BoardDaoTest {
 		int replyCnt = dao.insertReply(replyVo);
 		/***Then***/
 		logger.debug("replyCnt : {}", replyCnt);
+
+	}
+	
+	
+	@Test
+	public void fileListTest(){
+		/***Given***/
+		dao = new BoardDao();
+		int postnum =33;
+		/***When***/
+		List<AttachmentVo> fileList = dao.fileList(postnum);
+		/***Then***/
+		logger.debug("fileList : {}",fileList);
+
+	}
+	
+	@Test
+	public void fileDelteTest(){
+		/***Given***/
+		dao = new BoardDao();
+		int filenum = 22;
+		/***When***/
+		int fileDelte = dao.deleteFile(filenum);
+		/***Then***/
+		logger.debug("fileDelete : {}",fileDelte);
 
 	}
 	
